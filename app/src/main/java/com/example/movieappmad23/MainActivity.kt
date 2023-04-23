@@ -4,8 +4,17 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.movieappmad23.data.MovieDatabase
 import com.example.movieappmad23.navigation.Navigation
+import com.example.movieappmad23.repositories.MovieRepository
 import com.example.movieappmad23.ui.theme.MovieAppMAD23Theme
+import com.example.movieappmad23.utils.InjectorUtils
+import com.example.movieappmad23.viewmodels.MoviesViewModel
 
 class MainActivity : ComponentActivity() {
     // variable instantiations should go into onCreate
@@ -15,6 +24,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieAppMAD23Theme {
                 Navigation()
+                val viewModel: MoviesViewModel = viewModel(factory = InjectorUtils.provideMovieViewModelFactory(
+                    LocalContext.current))
+                val coroutineScope = rememberCoroutineScope()
             }
         }
     }
